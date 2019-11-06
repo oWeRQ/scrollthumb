@@ -135,9 +135,9 @@ function scrollThumb(options) {
 		window.addEventListener('resize', updateThumb, {passive: true});
 		options.content.addEventListener('scroll', renderThumb, {passive: true});
 
-		options.track.addEventListener('click', onMoveThumb);
-		options.track.addEventListener('mousedown', onDragThumb);
-		options.track.addEventListener('touchstart', onDragThumb);
+		options.track.addEventListener('click', onMoveThumb, {passive: true});
+		options.track.addEventListener('mousedown', onDragThumb, {passive: false});
+		options.track.addEventListener('touchstart', onDragThumb, {passive: true});
 	}
 
 	function destroy() {

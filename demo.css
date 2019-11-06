@@ -21,8 +21,8 @@
 }
 .b-customScroll-xThumb {
 	position: absolute;
-	height: 17px;
-	transition: top 50ms;
+	height: 100%;
+	transition: left 50ms;
 	background: black;
 }
 .b-customScroll-yTrack {
@@ -34,7 +34,7 @@
 }
 .b-customScroll-yThumb {
 	position: absolute;
-	width: 17px;
+	width: 100%;
 	transition: top 50ms;
 	background: black;
 }
@@ -44,7 +44,7 @@
 .b-customScroll-yTrack {
 	background: lightgray;
 	border-radius: 10px;
-	opacity: .3;
+	opacity: .5;
 }
 .b-customScroll-xTrack:hover,
 .b-customScroll-yTrack:hover,
