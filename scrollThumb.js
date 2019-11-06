@@ -4,10 +4,10 @@ function listenPointerMove(el, onMove, onEnd) {
 			onEnd.call(this, event);
 		}
 
-		removeListeners();
+		detach();
 	}
 
-	function addListeners() {
+	function attach() {
 		el.addEventListener('mousemove', onMove, {passive: true});
 		el.addEventListener('mouseup', onEndWrap, {passive: true});
 		el.addEventListener('mouseleave', onEndWrap, {passive: true});
@@ -17,7 +17,7 @@ function listenPointerMove(el, onMove, onEnd) {
 		el.addEventListener('touchcancel', onEndWrap, {passive: true});
 	}
 
-	function removeListeners() {
+	function detach() {
 		el.removeEventListener('mousemove', onMove);
 		el.removeEventListener('mouseup', onEndWrap);
 		el.removeEventListener('mouseleave', onEndWrap);
@@ -27,9 +27,9 @@ function listenPointerMove(el, onMove, onEnd) {
 		el.removeEventListener('touchcancel', onEndWrap);
 	}
 
-	addListeners();
+	attach();
 
-	return removeListeners;
+	return detach;
 }
 
 function getEventOffset(event, el) {
@@ -95,7 +95,7 @@ function scrollThumb(options) {
 		options.thumb.style[styleOffset] = getScroll() * (1 - visibleArea) * 100 + '%';
 	}
 
-	function updateThumb() {
+	function refresh() {
 		scrollOffsetMax = options.content[scrollSize] - options.content[clientSize];
 		visibleArea = options.content[clientSize] / options.content[scrollSize];
 		trackSize = options.track[clientSize];
@@ -130,9 +130,9 @@ function scrollThumb(options) {
 		});
 	}
 
-	function init() {
-		updateThumb();
-		window.addEventListener('resize', updateThumb, {passive: true});
+	function attach() {
+		refresh();
+		window.addEventListener('resize', refresh, {passive: true});
 		options.content.addEventListener('scroll', renderThumb, {passive: true});
 
 		options.track.addEventListener('click', onMoveThumb, {passive: true});
@@ -140,8 +140,8 @@ function scrollThumb(options) {
 		options.track.addEventListener('touchstart', onDragThumb, {passive: true});
 	}
 
-	function destroy() {
-		window.removeEventListener('resize', updateThumb);
+	function detach() {
+		window.removeEventListener('resize', refresh);
 		options.content.removeEventListener('scroll', renderThumb);
 
 		options.track.removeEventListener('click', onMoveThumb);
@@ -149,7 +149,11 @@ function scrollThumb(options) {
 		options.track.removeEventListener('touchstart', onDragThumb);
 	}
 
-	init();
+	attach();
 
-	return destroy;
+	return {
+		attach: attach,
+		detach: detach,
+		refresh: refresh,
+	};
 }

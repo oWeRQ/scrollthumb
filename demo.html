@@ -55,8 +55,12 @@
 
 	<button type="button" onclick="content.scrollTo(0, 0)">To left top</button>
 	<button type="button" onclick="content.scrollTo(10000, 10000)">To right bottom</button>
-	<button type="button" onclick="destroyXBar()">Destroy X bar</button>
-	<button type="button" onclick="destroyYBar()">Destroy Y bar</button>
+	<button type="button" onclick="xBar.attach()">Attach X bar</button>
+	<button type="button" onclick="xBar.detach()">Detach X bar</button>
+	<button type="button" onclick="xBar.refresh()">Refresh X bar</button>
+	<button type="button" onclick="yBar.attach()">Attach Y bar</button>
+	<button type="button" onclick="yBar.detach()">Detach Y bar</button>
+	<button type="button" onclick="yBar.refresh()">Refresh Y bar</button>
 
 	<script src="scrollThumb.js"></script>
 	<script>
@@ -67,8 +71,8 @@
 		var yTrack = document.querySelector('.b-customScroll-yTrack');
 		var yThumb = document.querySelector('.b-customScroll-yThumb');
 
-		var destroyXBar = scrollThumb({content: content, track: xTrack, thumb: xThumb, axis: 'x'});
-		var destroyYBar = scrollThumb({content: content, track: yTrack, thumb: yThumb, axis: 'y'});
+		var xBar = scrollThumb({content: content, track: xTrack, thumb: xThumb, axis: 'x'});
+		var yBar = scrollThumb({content: content, track: yTrack, thumb: yThumb, axis: 'y'});
 
 		// Example 2: map
 		var track = document.querySelector('.b-customScroll-track');
