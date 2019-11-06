@@ -1,31 +1,39 @@
 function listenPointerMove(el, onMove, onEnd) {
-	function onEndHandler(event) {
+	function onEndWrap(event) {
 		if (typeof onEnd === 'function') {
 			onEnd.call(this, event);
 		}
 
-		el.removeEventListener('mousemove', onMove);
-		el.removeEventListener('mouseup', onEndHandler);
-		el.removeEventListener('mouseleave', onEndHandler);
-
-		el.removeEventListener('touchmove', onMove);
-		el.removeEventListener('touchend', onEndHandler);
-		el.removeEventListener('touchcancel', onEndHandler);
+		removeListeners();
 	}
 
-	el.addEventListener('mousemove', onMove, {passive: true});
-	el.addEventListener('mouseup', onEndHandler, {passive: true});
-	el.addEventListener('mouseleave', onEndHandler, {passive: true});
+	function addListeners() {
+		el.addEventListener('mousemove', onMove, {passive: true});
+		el.addEventListener('mouseup', onEndWrap, {passive: true});
+		el.addEventListener('mouseleave', onEndWrap, {passive: true});
 
-	el.addEventListener('touchmove', onMove, {passive: true});
-	el.addEventListener('touchend', onEndHandler, {passive: true});
-	el.addEventListener('touchcancel', onEndHandler, {passive: true});
+		el.addEventListener('touchmove', onMove, {passive: true});
+		el.addEventListener('touchend', onEndWrap, {passive: true});
+		el.addEventListener('touchcancel', onEndWrap, {passive: true});
+	}
 
-	return onEndHandler;
+	function removeListeners() {
+		el.removeEventListener('mousemove', onMove);
+		el.removeEventListener('mouseup', onEndWrap);
+		el.removeEventListener('mouseleave', onEndWrap);
+
+		el.removeEventListener('touchmove', onMove);
+		el.removeEventListener('touchend', onEndWrap);
+		el.removeEventListener('touchcancel', onEndWrap);
+	}
+
+	addListeners();
+
+	return removeListeners;
 }
 
 function getEventOffset(event, el) {
-	var rect = el.getBoundingClientRect();
+	var rect = (el instanceof HTMLElement ? el.getBoundingClientRect() : {left: 0, top: 0});
 	var pointer = (event.targetTouches ? event.targetTouches[0] : event);
 
 	return {
@@ -68,39 +76,41 @@ function scrollThumb(options) {
 		return;
 	}
 
-	function setScroll(offset) {
-		var scrollOffsetMax = options.content[scrollSize] - options.content[clientSize];
+	var scrollOffsetMax = 0;
+	var visibleArea = 0;
+	var trackSize = 0;
+	var thumbSize = 0;
+	var thumbOffset = 0;
 
-		options.content[scrollOffset] = scrollOffsetMax * offset;
+	function getScroll() {
+		return options.content[scrollOffset] / scrollOffsetMax;
 	}
 
-	function setThumb(offset) {
-		var size = options.content[clientSize] / options.content[scrollSize];
+	function setScroll(scroll) {
+		options.content[scrollOffset] = scrollOffsetMax * scroll;
+	}
 
-		options.thumb.style[styleSize] = size * 100 + '%';
-		options.thumb.style[styleOffset] = offset * (1 - size) * 100 + '%';
+	function renderThumb() {
+		options.thumb.style[styleSize] = visibleArea * 100 + '%';
+		options.thumb.style[styleOffset] = getScroll() * (1 - visibleArea) * 100 + '%';
 	}
 
 	function updateThumb() {
-		var scrollOffsetMax = options.content[scrollSize] - options.content[clientSize];
+		scrollOffsetMax = options.content[scrollSize] - options.content[clientSize];
+		visibleArea = options.content[clientSize] / options.content[scrollSize];
+		trackSize = options.track[clientSize];
+		thumbSize = trackSize * visibleArea;
 
 		options.track.hidden = (scrollOffsetMax === 0 && !options.alwaysShow);
 
-		if (scrollOffsetMax) {
-			setThumb(options.content[scrollOffset] / scrollOffsetMax);
-		} else if (options.alwaysShow) {
-			setThumb(0);
-		}
+		renderThumb();
 	}
 
-	var startThumbOffset = null;
 	function onMoveThumb(event) {
 		var trackOffset = getEventOffset(event, options.track)[styleOffset];
-		var thumbSize = options.track[clientSize] * options.content[clientSize] / options.content[scrollSize];
-		var thumbOffset = (startThumbOffset || thumbSize / 2);
-		var offset = (trackOffset - thumbOffset) / (options.track[clientSize] - thumbSize);
+		var scroll = (trackOffset - thumbOffset) / (trackSize - thumbSize);
 
-		setScroll(offset);
+		setScroll(scroll);
 	}
 
 	function onDragThumb(event) {
@@ -108,7 +118,11 @@ function scrollThumb(options) {
 			event.preventDefault(); // prevent text selection
 		}
 
-		startThumbOffset = (event.target === options.thumb ? getEventOffset(event, options.thumb)[styleOffset] : null);
+		if (event.target === options.thumb) {
+			thumbOffset = getEventOffset(event, options.thumb)[styleOffset];
+		} else {
+			thumbOffset = thumbSize / 2;
+		}
 
 		options.track.classList.add(options.activeClass);
 		listenPointerMove(document, onMoveThumb, function(e) {
@@ -118,8 +132,8 @@ function scrollThumb(options) {
 
 	function init() {
 		updateThumb();
-		options.content.addEventListener('scroll', updateThumb, {passive: true});
 		window.addEventListener('resize', updateThumb, {passive: true});
+		options.content.addEventListener('scroll', renderThumb, {passive: true});
 
 		options.track.addEventListener('click', onMoveThumb);
 		options.track.addEventListener('mousedown', onDragThumb);
@@ -127,8 +141,8 @@ function scrollThumb(options) {
 	}
 
 	function destroy() {
-		options.content.removeEventListener('scroll', updateThumb);
 		window.removeEventListener('resize', updateThumb);
+		options.content.removeEventListener('scroll', renderThumb);
 
 		options.track.removeEventListener('click', onMoveThumb);
 		options.track.removeEventListener('mousedown', onDragThumb);
