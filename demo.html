@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>custom-scrollbar demo</title>
+	<link rel="stylesheet" href="demo.css">
+
+</head>
+<body>
+	<div class="b-customScroll">
+		<div class="b-customScroll-content" style="height: 20em;">
+			<p>TesttesttestTesttesttestTesttesttestTesttesttestTesttesttestTesttesttestTesttesttest</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+			<p>Test test test</p>
+		</div>
+
+		<div class="b-customScroll-xTrack">
+			<div class="b-customScroll-xThumb"></div>
+		</div>
+		<div class="b-customScroll-yTrack">
+			<div class="b-customScroll-yThumb"></div>
+		</div>
+
+		<div class="b-customScroll-track">
+			<div class="b-customScroll-thumb"></div>
+		</div>
+	</div>
+
+	<button type="button" onclick="content.scrollTo(0, 0)">To left top</button>
+	<button type="button" onclick="content.scrollTo(10000, 10000)">To right bottom</button>
+	<button type="button" onclick="destroyXBar()">Destroy X bar</button>
+	<button type="button" onclick="destroyYBar()">Destroy Y bar</button>
+
+	<script src="scrollThumb.js"></script>
+	<script>
+		// Example 1: scrollbars
+		var content = document.querySelector('.b-customScroll-content');
+		var xTrack = document.querySelector('.b-customScroll-xTrack');
+		var xThumb = document.querySelector('.b-customScroll-xThumb');
+		var yTrack = document.querySelector('.b-customScroll-yTrack');
+		var yThumb = document.querySelector('.b-customScroll-yThumb');
+
+		var destroyXBar = scrollThumb({content: content, track: xTrack, thumb: xThumb, axis: 'x'});
+		var destroyYBar = scrollThumb({content: content, track: yTrack, thumb: yThumb, axis: 'y'});
+
+		// Example 2: map
+		var track = document.querySelector('.b-customScroll-track');
+		var thumb = document.querySelector('.b-customScroll-thumb');
+
+		scrollThumb({content: content, track: track, thumb: thumb, axis: 'x', alwaysShow: true});
+		scrollThumb({content: content, track: track, thumb: thumb, axis: 'y', alwaysShow: true});
+	</script>
+</body>
+</html>
