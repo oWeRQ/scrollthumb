@@ -43,6 +43,8 @@ function getEventOffset(event, el) {
 }
 
 function scrollThumb(options) {
+	'use strict';
+
 	options = Object.assign({
 		content: null,
 		track: null,
@@ -50,6 +52,7 @@ function scrollThumb(options) {
 		axis: 'y',
 		activeClass: 'm-active',
 		alwaysShow: false,
+		scrollSteps: 0,
 	}, options);
 
 	if (!(options.content instanceof HTMLElement && options.track instanceof HTMLElement && options.thumb instanceof HTMLElement)) {
@@ -108,7 +111,14 @@ function scrollThumb(options) {
 
 	function onMoveThumb(event) {
 		var trackOffset = getEventOffset(event, options.track)[styleOffset];
-		var scroll = (trackOffset - thumbOffset) / (trackSize - thumbSize);
+
+		if (options.scrollSteps) {
+			var stepArea = visibleArea / options.scrollSteps;
+			var scroll = (trackOffset - thumbOffset) / trackSize;
+			scroll = Math.round(scroll / stepArea) * stepArea / (1 - visibleArea);
+		} else {
+			var scroll = (trackOffset - thumbOffset) / (trackSize - thumbSize);
+		}
 
 		setScroll(scroll);
 	}

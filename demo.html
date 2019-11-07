@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="b-customScroll">
-		<div class="b-customScroll-content" style="height: 20em;">
+		<div class="b-customScroll-content" style="height: 364px;">
 			<p>01 TesttesttestTesttesttestTesttesttestTesttesttestTesttesttestTesttesttestTesttesttest</p>
 			<p>02 Test test test</p>
 			<p>03 Test test test</p>
@@ -71,8 +71,8 @@
 		var yTrack = document.querySelector('.b-customScroll-yTrack');
 		var yThumb = document.querySelector('.b-customScroll-yThumb');
 
-		var xBar = scrollThumb({content: content, track: xTrack, thumb: xThumb, axis: 'x'});
-		var yBar = scrollThumb({content: content, track: yTrack, thumb: yThumb, axis: 'y'});
+		var xBar = scrollThumb({content: content, track: xTrack, thumb: xThumb, axis: 'x', scrollSteps: 1});
+		var yBar = scrollThumb({content: content, track: yTrack, thumb: yThumb, axis: 'y', scrollSteps: 1});
 
 		// Example 2: map
 		var track = document.querySelector('.b-customScroll-track');
