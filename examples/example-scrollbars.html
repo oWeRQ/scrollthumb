@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>example-scrollbar</title>
+	<style>
+		/* Base */
+		.b-scroll {
+			position: relative;
+		}
+		.b-scroll-content {
+			overflow: auto;
+			scrollbar-width: none; /* Firefox */
+			-ms-overflow-style: none;  /* IE 10+ */
+		}
+		.b-scroll-content::-webkit-scrollbar {
+			display: none;
+			width: 0px;
+			background: transparent; /* Chrome/Safari/Webkit */
+		}
+		.b-scroll-xTrack {
+			position: absolute;
+			left: 0;
+			right: 17px;
+			bottom: 0;
+			height: 17px;
+		}
+		.b-scroll-xThumb {
+			position: absolute;
+			height: 100%;
+			transition: left 50ms;
+			background: black;
+		}
+		.b-scroll-yTrack {
+			position: absolute;
+			right: 0;
+			top: 0;
+			bottom: 17px;
+			width: 17px;
+		}
+		.b-scroll-yThumb {
+			position: absolute;
+			width: 100%;
+			transition: top 50ms;
+			background: black;
+		}
+
+		/* Customize */
+		.b-scroll-xTrack,
+		.b-scroll-yTrack {
+			background: lightgray;
+			border-radius: 10px;
+			opacity: .5;
+		}
+		.b-scroll-xTrack:hover,
+		.b-scroll-yTrack:hover,
+		.b-scroll-xTrack.m-active,
+		.b-scroll-yTrack.m-active {
+			opacity: 1;
+			transition: opacity .3s;
+		}
+		.b-scroll-xThumb,
+		.b-scroll-yThumb {
+			background: gray;
+			border-radius: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="b-scroll">
+		<div class="b-scroll-content" style="height: 364px;">
+			<p>01 TesttesttestTesttesttestTesttesttestTesttesttestTesttesttestTesttesttestTesttesttest</p>
+			<p>02 Test test test</p>
+			<p>03 Test test test</p>
+			<p>04 Test test test</p>
+			<p>05 Test test test</p>
+			<p>06 Test test test</p>
+			<p>07 Test test test</p>
+			<p>08 Test test test</p>
+			<p>09 Test test test</p>
+			<p>10 Test test test</p>
+			<p>11 Test test test</p>
+			<p>12 Test test test</p>
+			<p>13 Test test test</p>
+			<p>14 Test test test</p>
+			<p>15 Test test test</p>
+			<p>16 Test test test</p>
+			<p>17 Test test test</p>
+			<p>18 Test test test</p>
+			<p>19 Test test test</p>
+			<p>20 Test test test</p>
+			<p>21 Test test test</p>
+			<p>22 Test test test</p>
+			<p>23 Test test test</p>
+			<p>24 Test test test</p>
+			<p>25 Test test test</p>
+			<p>26 Test test test</p>
+			<p>27 Test test test</p>
+			<p>28 Test test test</p>
+			<p>29 Test test test</p>
+			<p>30 Test test test</p>
+		</div>
+
+		<div class="b-scroll-xTrack">
+			<div class="b-scroll-xThumb"></div>
+		</div>
+		<div class="b-scroll-yTrack">
+			<div class="b-scroll-yThumb"></div>
+		</div>
+	</div>
+
+	<button type="button" onclick="content.scrollTo(0, 0)">To left top</button>
+	<button type="button" onclick="content.scrollTo(10000, 10000)">To right bottom</button>
+	<button type="button" onclick="xBar.attach()">Attach X bar</button>
+	<button type="button" onclick="xBar.detach()">Detach X bar</button>
+	<button type="button" onclick="xBar.refresh()">Refresh X bar</button>
+	<button type="button" onclick="yBar.attach()">Attach Y bar</button>
+	<button type="button" onclick="yBar.detach()">Detach Y bar</button>
+	<button type="button" onclick="yBar.refresh()">Refresh Y bar</button>
+
+	<script src="../scrollThumb.js"></script>
+	<script>
+		var content = document.querySelector('.b-scroll-content');
+		var xTrack = document.querySelector('.b-scroll-xTrack');
+		var xThumb = document.querySelector('.b-scroll-xThumb');
+		var yTrack = document.querySelector('.b-scroll-yTrack');
+		var yThumb = document.querySelector('.b-scroll-yThumb');
+
+		var xBar = scrollThumb({content: content, track: xTrack, thumb: xThumb, axis: 'x'});
+		var yBar = scrollThumb({content: content, track: yTrack, thumb: yThumb, axis: 'y'});
+	</script>
+</body>
+</html>

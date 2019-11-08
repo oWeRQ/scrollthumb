@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns="http://www.w3.org/2000/svg"
+  width="210.15475mm"
+  height="167.06549mm"
+  viewBox="0 0 210.15475 167.06549"
+  version="1.1">
+
+  <radialGradient id="gradient-sky" cx="50%" cy="100%" r="50%">
+    <stop offset="0%" stop-color="gold" />
+    <stop offset="100%" stop-color="teal" />
+  </radialGradient>
+
+  <linearGradient id="gradient-water" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0%" stop-color="#035450" />
+    <stop offset="100%" stop-color="teal" />
+  </linearGradient>
+
+  <g transform="translate(-0.75595236,-83.065475)">
+    <rect
+      width="210.15475"
+      height="83.910721"
+      x="0.75595236"
+      y="83.065475"
+      style="fill:url(#gradient-sky)" />
+    <circle
+      style="fill:#ffff00;stroke-width:0.26458332"
+      cx="105.83333"
+      cy="165.46428"
+      r="29.482143" />
+    <rect
+      style="fill:url(#gradient-water)"
+      width="210.15475"
+      height="83.154762"
+      x="0.75595242"
+      y="166.9762" />
+  </g>
+</svg>

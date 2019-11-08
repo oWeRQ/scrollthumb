@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>example-minimap</title>
+	<style>
+		img {
+			vertical-align: middle;
+		}
+
+		.b-minimap {
+			position: relative;
+		}
+		.b-minimap-content {
+			overflow: auto;
+			width: 400px;
+			height: 300px;
+		}
+		.b-minimap-track {
+			overflow: hidden;
+			position: absolute;
+			left: 8px;
+			bottom: 20px;
+			width: 100px;
+			background: lightgray;
+			box-shadow: 0 1px 4px rgba(0, 0, 0, .5);
+		}
+		.b-minimap-trackImage {
+			width: 100%;
+		}
+		.b-minimap-thumb {
+			box-sizing: border-box;
+			position: absolute;
+			width: 100%;
+			height: 100px;
+			background: rgba(255, 255, 255, .3);
+			border: 1px solid gray;
+			transition: top 50ms;
+		}
+	</style>
+</head>
+<body>
+	<div class="b-minimap">
+		<div class="b-minimap-content">
+			<img class="b-minimap-contentImage" src="images/sunset.svg" alt="Sunset">
+		</div>
+
+		<div class="b-minimap-track">
+			<img class="b-minimap-trackImage" src="images/sunset.svg" alt="Sunset">
+			<div class="b-minimap-thumb"></div>
+		</div>
+	</div>
+
+	<script src="../scrollThumb.js"></script>
+	<script>
+		var content = document.querySelector('.b-minimap-content');
+		var contentImage = document.querySelector('.b-minimap-contentImage');
+		var track = document.querySelector('.b-minimap-track');
+		var thumb = document.querySelector('.b-minimap-thumb');
+
+		contentImage.addEventListener('load', function() {
+			scrollThumb({content: content, track: track, thumb: thumb, axis: 'x', alwaysShow: true}).setScroll(0.5);
+			scrollThumb({content: content, track: track, thumb: thumb, axis: 'y', alwaysShow: true}).setScroll(0.5);
+		});
+	</script>
+</body>
+</html>

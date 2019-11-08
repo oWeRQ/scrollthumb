@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>example-slider</title>
+	<style>
+		.b-slider {
+			position: relative;
+			margin: 0 25%;
+			width: 50%;
+		}
+		.b-slider-track {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: -20px;
+			height: 17px;
+			background: lightgray;
+			border-radius: 10px;
+			opacity: .5;
+		}
+		.b-slider-thumb {
+			position: absolute;
+			height: 100%;
+			background: gray;
+			border-radius: 10px;
+			transition: left 150ms;
+		}
+		.b-slider-track:hover,
+		.b-slider-track.m-active {
+			opacity: 1;
+			transition: opacity .3s;
+		}
+		.b-slider-content {
+			overflow: hidden;
+			display: flex;
+		}
+		.b-slider-item {
+			flex-shrink: 0;
+			width: 25%;
+			height: 200px;
+			line-height: 200px;
+			font-size: 60px;
+			text-align: center;
+			color: white;
+			opacity: .5;
+		}
+	</style>
+</head>
+<body>
+	<div class="b-slider">
+		<div class="b-slider-content">
+			<div class="b-slider-item" style="background: red">1</div>
+			<div class="b-slider-item" style="background: green">2</div>
+			<div class="b-slider-item" style="background: blue">3</div>
+			<div class="b-slider-item" style="background: red">4</div>
+			<div class="b-slider-item" style="background: green">5</div>
+			<div class="b-slider-item" style="background: blue">6</div>
+			<div class="b-slider-item" style="background: red">7</div>
+			<div class="b-slider-item" style="background: green">8</div>
+			<div class="b-slider-item" style="background: blue">9</div>
+		</div>
+
+		<div class="b-slider-track">
+			<div class="b-slider-thumb"></div>
+		</div>
+	</div>
+
+	<script src="../scrollThumb.js"></script>
+	<script>
+		var content = document.querySelector('.b-slider-content');
+		var track = document.querySelector('.b-slider-track');
+		var thumb = document.querySelector('.b-slider-thumb');
+
+		scrollThumb({content: content, track: track, thumb: thumb, axis: 'x', scrollSteps: 4});
+	</script>
+</body>
+</html>

@@ -114,8 +114,8 @@ function scrollThumb(options) {
 
 		if (options.scrollSteps) {
 			var stepArea = visibleArea / options.scrollSteps;
-			var scroll = (trackOffset - thumbOffset) / trackSize;
-			scroll = Math.round(scroll / stepArea) * stepArea / (1 - visibleArea);
+			var scrollArea = (trackOffset - thumbOffset) / trackSize;
+			var scroll = Math.round(scrollArea / stepArea) * stepArea / (1 - visibleArea);
 		} else {
 			var scroll = (trackOffset - thumbOffset) / (trackSize - thumbSize);
 		}
@@ -165,5 +165,6 @@ function scrollThumb(options) {
 		attach: attach,
 		detach: detach,
 		refresh: refresh,
+		setScroll: setScroll,
 	};
 }
